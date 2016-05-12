@@ -9,9 +9,7 @@
  *	 // for each object that matches the query
  * });
  */
-//({define:typeof define!="undefined"?define:function(deps, factory){module.exports = factory(exports, require("./parser"), require("./js-array"));}}).
-//define(["exports", "./parser", "./js-array"], function(exports, parser, jsarray){
-({define:typeof define!="undefined"?define:function(deps, factory){module.exports = factory(exports, require("./parser"), require("./util/each"));}}).
+if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define(["exports", "./parser", "./util/each"], function(exports, parser, each){
 
 var parseQuery = parser.parseQuery;

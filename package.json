@@ -39,6 +39,7 @@
     "promised-io": "http://github.com/kriszyp/promised-io/zipball/v0.2.1"
   },
   "dependencies": {
+    "amdefine": "^1.0.0",
     "promised-io": ">=0.3.0"
   },
   "devDependencies": {

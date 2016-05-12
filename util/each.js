@@ -1,4 +1,4 @@
-({define:typeof define!=='undefined'?define:function(deps, factory){module.exports = factory(exports);}}).
+if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define([], function(){
 return each;
 
