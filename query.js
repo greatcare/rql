@@ -79,28 +79,32 @@ function encodeString(s) {
 exports.encodeValue = function(val) {
 		var encoded;
 		if (val === null) val = 'null';
-		if (val !== parser.converters["default"]('' + (
-				val.toISOString && val.toISOString() || val.toString()
-		))) {
-				var type = typeof val;
-				if(val instanceof RegExp){
-					// TODO: control whether to we want simpler glob() style
-					val = val.toString();
-					var i = val.lastIndexOf('/');
-					type = val.substring(i).indexOf('i') >= 0 ? "re" : "RE";
-					val = encodeString(val.substring(1, i));
-					encoded = true;
-				}
-				if(type === "object"){
-						type = "epoch";
-						val = val.getTime();
+		try {
+			if (val !== parser.converters["default"]('' + (
+					val.toISOString && val.toISOString() || val.toString()
+			))) {
+					var type = typeof val;
+					if(val instanceof RegExp){
+						// TODO: control whether to we want simpler glob() style
+						val = val.toString();
+						var i = val.lastIndexOf('/');
+						type = val.substring(i).indexOf('i') >= 0 ? "re" : "RE";
+						val = encodeString(val.substring(1, i));
 						encoded = true;
-				}
-				if(type === "string") {
-						val = encodeString(val);
-						encoded = true;
-				}
-				val = [type, val].join(":");
+					}
+					if(type === "object"){
+							type = "epoch";
+							val = val.getTime();
+							encoded = true;
+					}
+					if(type === "string") {
+							val = encodeString(val);
+							encoded = true;
+					}
+					val = [type, val].join(":");
+			}
+		} catch (conversionError) {
+			// The conversion necessity check has failed and we have not encoded the value. The next conditional block will take care of it.
 		}
 		if (!encoded && typeof val === "string") val = encodeString(val);
 		return val;
